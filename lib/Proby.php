@@ -33,10 +33,11 @@ abstract class Proby
   public static function sendFinishNotification($taskId, $failed=null, $errorMessage=null)
   {
     $params = array();
-    if ($failed)
+    if ($failed == true) {
       $params['failed'] = $failed;
-    if ($errorMessage)
-      $params['error_message'] = $errorMessage;
+      if ($errorMessage)
+        $params['error_message'] = $errorMessage;
+    }
 
     return Proby_Notifier::sendNotification($taskId, 'finish', $params);
   }
