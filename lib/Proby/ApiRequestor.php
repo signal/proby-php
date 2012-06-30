@@ -74,8 +74,7 @@ class Proby_ApiRequestor
 
     $absUrl = $this->apiUrl($url);
     $params = self::_encodeObjects($params);
-    $headers = array('api_key: ' . $myApiKey,
-                     'Content-Type: application/json');
+    $headers = array('api_key: ' . $myApiKey);
     list($rbody, $rcode) = $this->_curlRequest($meth, $absUrl, $headers, $params);
     return array($rbody, $rcode, $myApiKey);
   }
