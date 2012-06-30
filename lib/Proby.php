@@ -24,6 +24,16 @@ abstract class Proby
   {
     self::$apiKey = $apiKey;
   }
+
+  public static function sendStartNotification($taskId)
+  {
+    return Proby_Notifier::sendNotification($taskId, 'start');
+  }
+
+  public static function sendFinishNotification($taskId)
+  {
+    return Proby_Notifier::sendNotification($taskId, 'finish');
+  }
 }
 
 
