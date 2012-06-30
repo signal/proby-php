@@ -2,24 +2,24 @@
 
 class Proby_Notifier
 {
-  public function sendStartNotification($taskId)
+  public static function sendStartNotification($taskId)
   {
-    return $this->sendNotification($taskId, 'start');
+    return Proby_Notifier::sendNotification($taskId, 'start');
   }
 
-  public function sendFinishNotification($taskId)
+  public static function sendFinishNotification($taskId)
   {
-    return $this->sendNotification($taskId, 'finish');
+    return Proby_Notifier::sendNotification($taskId, 'finish');
   }
 
-  private function sendNotification($taskId, $type)
+  private static function sendNotification($taskId, $type)
   {
     $requestor = new Proby_ApiRequestor();
-    $url = $this->notificationUrl($taskId, $type);
+    $url = Proby_Notifier::notificationUrl($taskId, $type);
     list($response, $apiKey) = $requestor->request('post', $url);
   }
 
-  private function notificationUrl($taskId, $type)
+  private static function notificationUrl($taskId, $type)
   {
     return "/api/v1/tasks/$taskId/$type.json";
   }
