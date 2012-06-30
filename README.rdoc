@@ -10,10 +10,10 @@ To get started, add the following to your PHP script:
 
 Simple usage looks like:
 
-    Proby::setApiKey('b4fe1200c105012efde3482a1411a947');
-    Proby_Notifier::sendStartNotification($my_task_id);
+    Proby::setApiKey("b4fe1200c105012efde3482a1411a947");
+    Proby::sendStartNotification($my_task_id);
     // do something
-    Proby_Notifier::sendFinishNotification($my_task_id);
+    Proby::sendFinishNotification($my_task_id);
 
 = Documentation
 
