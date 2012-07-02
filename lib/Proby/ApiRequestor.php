@@ -21,6 +21,12 @@ class Proby_ApiRequestor
     return http_build_query($d, null, '&');
   }
 
+  public static function fetchErrorMessage($rbody)
+  {
+    $jsonResponse = json_decode($rbody, true);
+    return $jsonResponse["message"];
+  }
+
   public function request($meth, $url, $params=null)
   {
     if (!$params)
@@ -32,16 +38,16 @@ class Proby_ApiRequestor
 
   public function handleApiError($rbody, $rcode, $resp)
   {
+    $errorMessage = self::fetchErrorMessage($rbody);
+
     switch ($rcode) {
     case 400:
     case 404:
-      throw new Proby_InvalidRequestError(isset($error['message']) ? $error['message'] : null,
-        isset($error['param']) ? $error['param'] : null,
-        $rcode, $rbody, $resp);
+      throw new Proby_InvalidRequestError($errorMessage, isset($error['param']) ? $error['param'] : null, $rcode, $rbody, $resp);
     case 401:
-      throw new Proby_AuthenticationError(isset($error['message']) ? $error['message'] : null, $rcode, $rbody, $resp);
+      throw new Proby_AuthenticationError($errorMessage, $rcode, $rbody, $resp);
     default:
-      throw new Proby_ApiError(isset($error['message']) ? $error['message'] : null, $rcode, $rbody, $resp);
+      throw new Proby_ApiError($errorMessage, $rcode, $rbody, $resp);
     }
   }
 

@@ -23,6 +23,7 @@ class Proby_InvalidRequestErrorTest extends UnitTestCase
       $this->fail("Did not raise error");
     } catch (Proby_InvalidRequestError $e) {
       $this->assertEqual(400, $e->getHttpStatus());
+      $this->assertEqual("TESTING: An invalid argument was provided", $e->getMessage());
     }
   }
 }

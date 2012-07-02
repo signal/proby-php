@@ -12,4 +12,19 @@ class Proby_ApiRequestorTest extends UnitTestCase
     $enc = Proby_APIRequestor::encode($a);
     $this->assertEqual($enc, 'that%5Byour%5D=example');
   }
+
+  public function testFetchErrorMessage()
+  {
+    $errorMessage = Proby_APIRequestor::fetchErrorMessage('{ "request" : "/foo/bar", "message" : "This is the error message" }');
+    $this->assertEqual($errorMessage, 'This is the error message');
+
+    $errorMessage = Proby_APIRequestor::fetchErrorMessage('not valid json');
+    $this->assertNull($errorMessage);
+
+    $errorMessage = Proby_APIRequestor::fetchErrorMessage('');
+    $this->assertNull($errorMessage);
+
+    $errorMessage = Proby_APIRequestor::fetchErrorMessage(null);
+    $this->assertNull($errorMessage);
+  }
 }
