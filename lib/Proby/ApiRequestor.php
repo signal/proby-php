@@ -32,9 +32,6 @@ class Proby_ApiRequestor
 
   public function handleApiError($rbody, $rcode, $resp)
   {
-    if (!is_array($resp) || !isset($resp['error']))
-      throw new Proby_ApiError("Invalid response object from API: $rbody (HTTP response code was $rcode)", $rcode, $rbody, $resp);
-    $error = $resp['error'];
     switch ($rcode) {
     case 400:
     case 404:
@@ -74,7 +71,7 @@ class Proby_ApiRequestor
 
     $absUrl = $this->apiUrl($url);
     $params = self::_encodeObjects($params);
-    $headers = array('api_key: ' . $myApiKey);
+    $headers = array('api_key: ' . $myApiKey, 'Content-Type: application/json');
     list($rbody, $rcode) = $this->_curlRequest($meth, $absUrl, $headers, $params);
     return array($rbody, $rcode, $myApiKey);
   }
@@ -106,7 +103,7 @@ class Proby_ApiRequestor
       }
     } else if ($meth == 'post') {
       $opts[CURLOPT_POST] = 1;
-      $opts[CURLOPT_POSTFIELDS] = self::encode($params);
+      $opts[CURLOPT_POSTFIELDS] = json_encode($params);
     } else if ($meth == 'delete')  {
       $opts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
       if (count($params) > 0) {

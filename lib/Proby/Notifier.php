@@ -11,6 +11,6 @@ class Proby_Notifier
 
   private static function _notificationUrl($taskId, $type)
   {
-    return "/api/v1/tasks/$taskId/$type";
+    return "/api/v1/tasks/$taskId/$type.json";
   }
 }
