@@ -7,6 +7,7 @@ class Proby_Notifier
     $requestor = new Proby_ApiRequestor();
     $url = self::_notificationUrl($taskId, $type);
     list($response, $apiKey) = $requestor->request('post', $url, $params);
+    return $response;
   }
 
   private static function _notificationUrl($taskId, $type)
