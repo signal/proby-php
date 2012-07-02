@@ -7,6 +7,7 @@ class Proby_AuthenticationErrorTest extends UnitTestCase
     Proby::setApiKey('invalid');
     try {
       Proby::sendStartNotification('some_task_id');
+      $this->fail("Did not raise error");
     } catch (Proby_AuthenticationError $e) {
       $this->assertEqual(401, $e->getHttpStatus());
     }
